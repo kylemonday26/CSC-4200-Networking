@@ -39,7 +39,7 @@ def unpack_packet(conn, header_format):
     return packet_header_as_string
 
 if __name__ == '__main__':
-    host = 'localhost'
+    host = '0.0.0.0'
     port = 12345
     # Fixed length header -> Version (1 byte), Header Length (1 byte), Service Type (1 byte), Payload Length (2 bytes)
     header_format = '!BBBH' # TODO: Specify the header format using "struct" 

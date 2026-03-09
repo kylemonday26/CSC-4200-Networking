@@ -18,7 +18,7 @@ def create_packet(version, header_length, service_type, payload):
         payload_bytes = struct.pack('!f', float(payload))
     elif service_type == 3:
         # If service type is 3, encode string to bytes
-        payload_bytes = payload.encode('uft-8')
+        payload_bytes = payload.encode('utf-8')
     else:
         # Else default to empty bytes if type is unkown
         payload_bytes = b''
@@ -40,7 +40,7 @@ if __name__ == '__main__':
     parser.add_argument('--header_length', type=int, required=True, help='Length of the packet header')
     parser.add_argument('--service_type', type=int, required=True, help='Service type of the payload (1 for int, 2 for float, 3 for string)')
     parser.add_argument('--payload', type=str, required=True, help='Payload to be packed into the packet')
-    parser.add_argument('--host', type=str, default='localhost', help='Server host')
+    parser.add_argument('--host', type=str, default='10.128.0.5', help='Server Internal IP')
     parser.add_argument('--port', type=int, default=12345, help='Server port')
     args = parser.parse_args()
     # TODO: Create and send packet using the create_packet function
