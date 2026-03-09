@@ -1,3 +1,8 @@
+# Author: Kyle Monday
+# Date 3/8/2026
+# I, the student, acknowledge the use of GPT5.2(OpenAI) and Gemini 3(Google) with helping the student in creating and debugging
+# the code along with researching the concepts that was learned in this lab to further understand those topics.
+
 import argparse
 import socket
 import struct
