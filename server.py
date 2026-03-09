@@ -47,6 +47,7 @@ if __name__ == '__main__':
         s.bind((host, port))
         s.listen()
 
+        # Show that the server is listening so that you know the server is online
         print(f"Server listening...")
 
         conn, addr = s.accept()
@@ -59,7 +60,8 @@ if __name__ == '__main__':
 
                     if not payload_string or "No data received" in payload_string:
                         break
-
+                    
+                    # Show that server has processed the data
                     print(f"Processed: {payload_string}")
 
                     #TODO: create header
@@ -87,6 +89,3 @@ if __name__ == '__main__':
                 except:
                     print("Connection closed or an error occurred")
                     break
-                #TODO: create header
-                #TODO: add payload
-                #TODO: send to client

@@ -40,6 +40,7 @@ if __name__ == '__main__':
     parser.add_argument('--header_length', type=int, required=True, help='Length of the packet header')
     parser.add_argument('--service_type', type=int, required=True, help='Service type of the payload (1 for int, 2 for float, 3 for string)')
     parser.add_argument('--payload', type=str, required=True, help='Payload to be packed into the packet')
+    # Change default to what IP your server is or whatever you are using
     parser.add_argument('--host', type=str, default='10.128.0.5', help='Server Internal IP')
     parser.add_argument('--port', type=int, default=12345, help='Server port')
     args = parser.parse_args()
@@ -49,7 +50,7 @@ if __name__ == '__main__':
     #TODO: connect to the server
     # I will use try/except blocks as networking can be unpredictable
     try:
-        # We use with as that ensures the socket is closed automatically even if an error occurs
+        # We use 'with' as that ensures the socket is closed automatically even if an error occurs
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             print(f"Connecting to {args.host}:{args.port}...")
             s.connect((args.host, args.port))
@@ -62,10 +63,11 @@ if __name__ == '__main__':
             # Receive the response header first
             received_header = s.recv(5)
             if not received_header:
+                # If no header is received print this and the server closes connection
                 print("Server closed the connection.")
             else:
                 # Unpack the header to understand the incoming payload
-                # I am shorting version, header_length, service_type, etc to v, hl, st, etc for readability
+                # I am shorting version, header_length, service_type, payload_length to v, hl, st, p_len for readability
                 v, hl, st, p_len = struct.unpack('!BBBH', received_header)
     #TODO: prints header
                 print(f"\n--- Received Header ---\nVersion {v}\nHeader Length: {hl}\nService Type: {st}\nPayload Length: {p_len}")
@@ -87,8 +89,11 @@ if __name__ == '__main__':
                 print(f"--- Received Payload ---\nData: {final_payload}\n")
     
     except ConnectionRefusedError:
+        # If the connection is refused print the error out
         print("Error: Could not connect to the server. Check to see if it is running?")
     except struct.error as e:
+        # If the was a data formatting error print the error out
         print(f"Error: Data formatting issue - {e}")
     except Exception as e:
+        # If any error happened print out this error
         print(f"An unexpected error occurred: {e}")
