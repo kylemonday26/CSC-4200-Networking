@@ -57,7 +57,7 @@ if __name__ == '__main__':
                     # TODO: Receive and unpack packet using the unpack_packet function
                     payload_string = unpack_packet(conn, header_format)
 
-                    if not payload_string:
+                    if not payload_string or "No data received" in payload_string:
                         break
 
                     print(f"Processed: {payload_string}")
@@ -70,12 +70,12 @@ if __name__ == '__main__':
                     # Create header fields
                     version = 1
                     header_length = struct.calcsize(header_format)
-                    service_type = 1
+                    service_type = 3
                     payload_length = len(payload_bytes)
 
                     # Pack the header
                     header = struct.pack(
-                        header_format,
+                        '!BBBH',
                         version,
                         header_length,
                         service_type,
