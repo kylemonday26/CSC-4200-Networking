@@ -22,7 +22,8 @@ def run_server():
         s.listen()
         log_message(args.logfile, f"Server listening on port {args.port}...")
 
-        while True: #Do not exit after one packet
+        while True: #Keep server running
+            print("Waiting for a connection...")
             conn, addr = s.accept()
             with conn:
                 log_message(args.logfile, f"Received connection from {addr}")
