@@ -28,24 +28,25 @@ def run_server():
             with conn:
                 log_message(args.logfile, f"Received connection from {addr}")
 
-            while True:
-                data = conn.recv(12 + 8) # Header + message
-                if not data: break
+                while True:
+                    data = conn.recv(12 + 8) # Header + message
+                    if not data: break
 
-                v, m_type, m_len, m_raw = struct.unpack(packet_fmt, data)
-                msg = m_raw.decode('utf-8').strip('\x00')
+                    v, m_type, m_len, m_raw = struct.unpack(packet_fmt, data)
+                    msg = m_raw.decode('utf-8').strip('\x00')
 
-                # We need to know check the version
-                if v != 17:
-                    log_message(args.logfile, "Version Mismatch")
-                    continue
+                    # We need to know check the version
+                    if v != 17:
+                        log_message(args.logfile, "Version Mismatch")
+                        continue
 
-                # We  need to handle the message types
-                if msg == "HELLO":
-                    log_message(args.logfile, "Recieved HELLO, sending HELLO back.")
-                    reply = struct.pack(packet_fmt, 17, 1, 5, b"HELLO")
-                    conn.sendall(reply)
-                else:
-                    log_message(args.logfile, f"IGNORING UNKNOWN COMMAND: {msg}")
+                    # We  need to handle the message types
+                    if msg == "HELLO":
+                        log_message(args.logfile, "Recieved HELLO, sending HELLO back.")
+                        reply = struct.pack(packet_fmt, 17, 1, 5, b"HELLO")
+                        conn.sendall(reply)
+                    else:
+                        log_message(args.logfile, f"IGNORING UNKNOWN COMMAND: {msg}")
+                        
 if __name__ == "__main__":
     run_server()
