@@ -42,7 +42,7 @@ def run_server():
 
                 # We  need to handle the message types
                 if msg == "HELLO":
-                    log_message(args.lockfile, "Recieved HELLO, sending HELLO back.")
+                    log_message(args.logfile, "Recieved HELLO, sending HELLO back.")
                     reply = struct.pack(packet_fmt, 17, 1, 5, b"HELLO")
                     conn.sendall(reply)
                 else:
