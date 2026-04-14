@@ -47,3 +47,5 @@ def run_server():
                     conn.sendall(reply)
                 else:
                     log_message(args.logfile, f"IGNORING UNKNOWN COMMAND: {msg}")
+if __name__ == "__main__":
+    run_server()
