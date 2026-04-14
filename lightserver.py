@@ -45,6 +45,15 @@ def run_server():
                         log_message(args.logfile, "Recieved HELLO, sending HELLO back.")
                         reply = struct.pack(packet_fmt, 17, 1, 5, b"HELLO")
                         conn.sendall(reply)
+                    
+                    elif m_type == 1:
+                        log_message(args.logfile, "EXECUTING SUPPORTED COMMAND: LIGHTON")
+                        reply = struct.pack(packet_fmt, 17, 2, 7, b"SUCCESS")
+                        conn.sendall(reply)
+                    elif m_type == 2:
+                        log_message(args.logfile, "EXECUTING SUPPORTED COMMAND: LIGHTOFF")
+                        reply = struct.pack(packet_fmt, 17, 2, 7, b"SUCCESS")
+                        conn.sendall(reply)
                     else:
                         log_message(args.logfile, f"IGNORING UNKNOWN COMMAND: {msg}")
                         
